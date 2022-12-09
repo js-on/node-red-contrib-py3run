@@ -39,9 +39,9 @@ def main():
     try:
         data = module.run(payload)
         if data[0]:
-            output(stdout=data(data[0]), rc=0)
+            output(stdout=str(data[0]), rc=0)
         elif data[1]:
-            output(stderr=data(data[1]), rc=1)
+            output(stderr=str(data[1]), rc=1)
     except Exception as e:
         output(stderr=f"Something went wrong running the module. {repr(e)}", rc=1)   
 
