@@ -35,8 +35,11 @@ def main():
         output(stderr=f"File '{fpath}' does not exist", rc=1)
 
     try:
-        payload = json.loads(sys.argv[2])
-    except Exception:
+        payload = sys.argv[2] or r"{}"
+        json.loads(payload)
+        if isinstance(payload, str):
+            payload = json.loads(payload)
+    except Exception as e:
         output(stderr="Invalid JSON passed to runner.", rc=1)
 
     folder = '/'.join(fpath.split('/')[:-1])
