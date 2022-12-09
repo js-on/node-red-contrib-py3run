@@ -1,3 +1,28 @@
+<script type="text/html" data-template-name="py3run">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-tag"></i> Path</label>
+        <input type="text" id="node-input-path" placeholder="/data/python/">
+    </div>
+    <div class="form-row">
+        <label for="node-input-args"><i class="fa fa-tag"></i> Arguments</label>
+        <input type="text" id="node-input-args">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="py3run">
+    <p>A simple node that allows running Python3 scripts stored anywhere in your container with any number of inputs</p>
+    <p>See <a href="https://github.com/js-on/node-red-contrib-py3run#python">this</a> page to find out how to build compatible scripts.</p>
+    <p>The parameter <code>path</code> must be the full path to your script. This value is required.</p>
+    <p>e.g.: <code>/data/python/sum.py</code></p>
+    <p>The parameter <code>args</code> must be a non-nested JSON object containing key-value pairs. This is not required if you don't need to pass values from NodeRed to Python.</p>
+    <p>e.g.: <code>{"a": 3, "b": 4}</code></p>
+    <p>You can either supply the data via <i>msg.payload</i> or set it in the config ui of the py3run node.</p>
+</script>
+
 <script type="text/javascript">
     RED.nodes.registerType('py3run', {
         category: 'function',
@@ -10,25 +35,15 @@
         outputLabels: ["stdout","stderr","rc"],
         inputs: 1,
         outputs: 3,
-        icon: "function.svg",
+        icon: "bridge.svg",
         label: function () {
             return this.name || "py3run";
+        },
+        oneditprepare: function() {
+            $("#node-input-args").typedInput({
+                type: "json",
+                types: ["json"],
+            });
         }
     });
-</script>
-
-<script type="text/html" data-template-name="py3run">
-    <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i>Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-</script>
-
-<script type="text/html" data-help-name="py3run">
-    <p>A simple node that allows running Python3 scripts stored anywhere in your container with any number of inputs</p>
-    <p>See <a href="https://github.com/js-on/node-red-contrib-py3run#python">this</a> page to find out how to build compatible scripts.</p>
-    <p>The parameter <code>path</code> must be the full path to your script.</p>
-    <p>e.g.: <code>/data/python/sum.py</code></p>
-    <p>The parameter <code>args</code> must be a non-nested JSON object containing key-value pairs.</p>
-    <p>e.g.: <code>{"a": 3, "b": 4}</code></p>
 </script>

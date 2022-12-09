@@ -2,23 +2,30 @@ var spawn = require("child_process").spawn;
 var fs = require("fs");
 
 module.exports = function(RED) {
-    async function run(fpath, args) {
-        
-    };
     function Py3RunNode(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', function(msg) {
-            let fpath = msg.payload.path;
+            let fpath, args;
+            if (msg.payload.hasOwnProperty("path")) {
+                fpath = msg.payload.path;
+            } else {
+                fpath = config.path;
+            }
             try {
                 if (fs.existsSync(fpath)) {}
             } catch(err) {
                 node.send(err);
+                return;
             }
-            let args = JSON.stringify(msg.payload.args);
-            
+            if (msg.payload.hasOwnProperty("args")) {
+                args = msg.payload.path;
+            } else {
+                args = config.args;
+            }
             cmd = new Promise((resolve, reject) => {
-                let p = spawn("python3", ["/data/python/runner.py", fpath, args]);
+                // let p = spawn("python3", ["/data/python/runner.py", fpath, args]);
+                let p = spawn("python3", ["/home/rtfm/Documents/Projects/node-red-contrib-py3run/src/runner.py", fpath, args]);
                 let stdout, stderr, rc;
                 p.stdout.on("data", (data) => { stdout = data });
                 p.stderr.on("data", (data) => { stderr = data });
