@@ -9,7 +9,11 @@ Simple node for interacting with Python scripts.
 **py3run** invokes a runner script */data/python/runner.py* which tries to import your custom Python script and pass the arguments over. Possible errors will be handled and returned to the three outputs stdout, stderr and rc (return code).
 
 ## Usage
-Insert a `py3run` node to your flow. Put a function node in front of it to craft the required payload.
+Insert a `py3run` node to your flow. Put a function node in front of it to craft the required payload. Or use the node inputs to pass path and args.
+
+Passing no arguments to Python is possible as well. Simply leave *msg.payload.args* or the corresponding input empty. 
+
+The path to the Python script cannot be empty.
 
 ## NodeRed function node
 ```js
@@ -77,9 +81,9 @@ It is possible to get pip3 running in a NodeRed container, but it's not recommen
 
 
 ## TODO
-- Make payload configurable via frontend by editing the custom nodes UI part (input for path and JSON)
+- ~~Make payload configurable via frontend by editing the custom nodes UI part (input for path and JSON)~~
 - Add modules (like in function setup) where you can enter Python modules which then will be tried to install
-- Add var *__types* to custom scripts to define the expected input type. The runner will then be able to do a pre-check of the arguments to save work in the custom script.
+- ~~Add var *__types* to custom scripts to define the expected input type. The runner will then be able to do a pre-check of the arguments to save work in the custom script.~~
 
 ## Contribute
 Please report bugs or send a pull request and I try to fix, review and merge asap. 
