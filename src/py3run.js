@@ -24,8 +24,7 @@ module.exports = function(RED) {
                 args = config.args;
             }
             cmd = new Promise((resolve, reject) => {
-                // let p = spawn("python3", ["/data/python/runner.py", fpath, args]);
-                let p = spawn("python3", ["/home/rtfm/Documents/Projects/node-red-contrib-py3run/src/runner.py", fpath, args]);
+                let p = spawn("python3", ["/data/python/runner.py", fpath, args]);
                 let stdout, stderr, rc;
                 p.stdout.on("data", (data) => { stdout = data });
                 p.stderr.on("data", (data) => { stderr = data });
