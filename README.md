@@ -47,6 +47,25 @@ def run(payload: dict) -> list:
     return [a+b, None]
 ```
 
+If you wanna get rid of checking the input types, you can use the *__types* object in your custom script to map your argument names to a desired type. The runner will check the types at runtime by trying to cast the incoming values to the type if the desired type and incoming type are mismatching. If it fails, you'll get a message on stderr and the script won't run.
+
+```py
+# object name must be __types
+# object must contain a key (the name of your argument) and the desired type.
+__types = {
+    "a": int,
+    "b": int
+}
+
+# same as in first example
+def run(payload: dict) -> dict:
+    a = payload.get("a")
+    b = payload.get("b")
+    # But without further checks since runner will check for int or try to cast.
+    # Be aware, passing floats to this script will lead to wrong results since they will be converted to int
+    return [a+b, None]
+```
+
 ## Python modules
 It is possible to get pip3 running in a NodeRed container, but it's not recommended though.
 - Run bash as root inside the container: `docker exec -u root -it <container name> /bin/bash`
