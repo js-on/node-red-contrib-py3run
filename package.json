@@ -1,6 +1,6 @@
 {
   "name": "@js-on/node-red-contrib-py3run",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NodeRed node for interacting with Python3 scripts.",
   "main": "src/py3run.js",
   "scripts": {
@@ -12,6 +12,7 @@
   ],
   "author": "js-on",
   "license": "MIT",
+  "homepage": "https://github.com/js-on/node-red-contrib-py3run",
   "dependencies": {},
   "node-red": {
     "version": ">=2.0.0",
