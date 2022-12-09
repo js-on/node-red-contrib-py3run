@@ -3,7 +3,6 @@
 #
 # Copyright (c) 2022 js-on
 #
-import contextlib
 import importlib
 import json
 import sys
@@ -17,16 +16,7 @@ def output(stdout: str = None, stderr: str = None, rc: int = 0):
         sys.stderr.write(stderr)
     exit(rc)
 
-
-def parse_args(args: dict, types: dict):
-    for k, t in types.items():
-        if k in args:
-            try:
-                args[k] = t(args[k])
-            except Exception:
-                output(
-                    stderr=f"Type mismatch for {k}. Expected {t} but got {type(args[k])}")
-
+# TODO: Implement type checking via module.__types
 
 def main():
     fpath = sys.argv[1]
@@ -46,10 +36,6 @@ def main():
     except Exception:
         output(stderr="Could not import module.", rc=1)
 
-    with contextlib.suppress(Exception):
-        # Quit and stderr of types are not matching
-        parse_args(payload, module.__types)
-
     try:
         data = module.run(payload)
         if data[0]:
@@ -57,9 +43,8 @@ def main():
         elif data[1]:
             output(stderr=str(data[1]), rc=1)
     except Exception as e:
-        output(
-            stderr=f"Something went wrong running the module. {repr(e)}", rc=1)
+        output(stderr=f"Something went wrong running the module. {repr(e)}", rc=1)   
 
-
+    
 if __name__ == "__main__":
     main()
